@@ -22,43 +22,53 @@ public:
 
     void traverse()
     {
+
         Node *actual = head;
-
-        cout << "Articulos Tecnologicos:" << endl;
-
-        while (actual != nullptr)
-        {
-            if (actual->value.type == "T")
+        
+        if (actual != nullptr)
             {
-                actual->value.showArticle();
-            }
-            actual = actual->next;
-        }
+                cout << "-------Articulos Disponibles En La Tienda-------" << endl;
 
-        actual = head;
-        cout << "Articulos Deportivos:" << endl;
-        while (actual != nullptr)
-        {
-            if (actual->value.type == "S")
-            {
-                actual->value.showArticle();
-            }
-            actual = actual->next;
-        }
-        actual = head;
+                cout << "Articulos Tecnologicos:" << endl;
 
-        cout << "Articulos Extranjeros:" << endl;
-        while (actual != nullptr)
-        {
-            if (actual->value.type == "F")
-            {
-                actual->value.showArticle();
+                while (actual != nullptr)
+                {
+                    if (actual->value.type == "T")
+                    {
+                        actual->value.showArticle();
+                    }
+                    actual = actual->next;
+                }
+
+                actual = head;
+                cout << "Articulos Deportivos:" << endl;
+                while (actual != nullptr)
+                {
+                    if (actual->value.type == "S")
+                    {
+                        actual->value.showArticle();
+                    }
+                    actual = actual->next;
+                }
+                actual = head;
+
+                cout << "Articulos Extranjeros:" << endl;
+                while (actual != nullptr)
+                {
+                    if (actual->value.type == "F")
+                    {
+                        actual->value.showArticle();
+                    }
+                    actual = actual->next;
+                }
             }
-            actual = actual->next;
+        else
+        {
+            cout << "El inventario esta vacio" << endl;
         }
     }
 
-    modify_element(int id, string valoramodificar)
+    void modify_element(int id, string valoramodificar)
     {
         Node *actual = head;
         if (head != nullptr)
@@ -112,11 +122,83 @@ public:
                 cout << "ID no encontrado: " << endl;
             }
         }
-        return false;
+        else
+        {
+            cout << "la lista se encuentra vacia" << endl;
+        }
+    }
+
+    void delete_element(int id)
+    {
+
+        if (head != nullptr)
+        {
+
+            int index = 0;
+            bool encontrado = false;
+            Node *actual = head;
+
+            while (actual != nullptr)
+            {
+                if (actual->value.id == id)
+                {
+                    encontrado = true;
+                    break;
+                }
+                index++;
+                actual = actual->next;
+            }
+
+            if (encontrado == false)
+            {
+                cout << "No se encontro el Articulo" << endl;
+                return;
+            }
+
+            if (index == 0)
+            {
+                if (head != nullptr)
+                {
+                    Node *temp = head;
+                    head = head->next;
+                    delete temp;
+                    size--;
+                }
+            }
+            else
+            {
+                Node *actual = head;
+                Node *anterior = nullptr;
+                Node *siguiente = nullptr;
+                Node *deletenode = nullptr;
+
+                for (int i = 0; i <= index; i++)
+                {
+                    if (i == index - 1)
+                    {
+                        anterior = actual;
+                    }
+                    if (i == index)
+                    {
+                        siguiente = actual->next;
+                        deletenode = actual;
+                    }
+                    actual = actual->next;
+                }
+                anterior->next = siguiente;
+                delete deletenode;
+                size--;
+            }
+        }
+        else
+        {
+            cout << "la lista se encuentra vacia" << endl;
+        }
     }
 
     void add_head(Article value)
     {
+        cout << "entre a la cabeza " << endl;
         Node *new_node = new Node(value);
         if (head == nullptr)
         {
@@ -128,10 +210,11 @@ public:
             head = new_node;
             new_node->next = aux_node;
         }
+
+        cout << head->value.id << endl;
+
         size++;
     }
-
-
- };
+};
 
 #endif // linkedlist
