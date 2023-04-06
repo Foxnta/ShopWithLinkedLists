@@ -14,6 +14,7 @@ public:
 public:
     Tienda();
 };
+
 Tienda::Tienda()
 {
     inv = linkedlist();

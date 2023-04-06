@@ -40,11 +40,25 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
     cin >> tipo;
     cout << "Ingrese el nombre: ";
     cin >> nombre;
+
+    
     cout << "Ingrese el ID (int): ";
     cin >> id;
-    cout << "Ingrese el precio (int): ";
+    
+    bool valido = false;
+    while (!valido) {
+        bool findid=inv.id_find(id);
+        if (findid==false){
+            valido = true; 
+            break;
+        }
+        cout << "Ingrese un ID no existente (int): ";
+        cin >> id;
+    }
+
+    cout << "Ingrese el precio (float): ";
     cin >> precio;
-    cout << "Ingrese la cantidad (float): ";
+    cout << "Ingrese la cantidad (int): ";
     cin >> cantidad;
 
     if (tipo == "T")

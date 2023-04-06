@@ -32,9 +32,10 @@ class SportArticle : public Article
 {
 public:
     SportArticle(string, int, float, int, string);
+    SportArticle(int, int, string);
 };
 
-SportArticle::SportArticle(string _name, int _id, float _price, int _quantity, string _type) : Article{_name, _id, _price, _quantity}
+SportArticle::SportArticle(string _name, int _id, float _price, int _quantity, string _type) : Article{_name, _id, _price, _quantity, _type}
 {
     name = _name;
     id = _id;
@@ -43,10 +44,18 @@ SportArticle::SportArticle(string _name, int _id, float _price, int _quantity, s
     type = _type;
 }
 
+SportArticle::SportArticle(int _id, int _quantity, string _type) : Article{"", _id, 0, _quantity, _type}
+{
+    id = _id;
+    quantity = _quantity;
+    type = _type;
+}
+
 class TechnologyArticle : public Article
 {
 public:
     TechnologyArticle(string, int, float, int, string);
+    TechnologyArticle(int, int, string);
 };
 
 TechnologyArticle::TechnologyArticle(string _name, int _id, float _price, int _quantity, string _type) : Article{_name, _id, _price, _quantity}
@@ -58,12 +67,20 @@ TechnologyArticle::TechnologyArticle(string _name, int _id, float _price, int _q
     type = _type;
 }
 
+TechnologyArticle::TechnologyArticle(int _id, int _quantity, string _type) : Article{"", _id, 0, _quantity, _type}
+{
+    id = _id;
+    quantity = _quantity;
+    type = _type;
+}
+
 
 class ForeignArticle : public Article
 {
 public:
     float impuesto = 0.1;
     ForeignArticle(string, int, float, int, string);
+    ForeignArticle(int, int, string);
 };
 
 ForeignArticle::ForeignArticle(string _name, int _id, float _price, int _quantity, string _type) : Article{_name, _id, _price, _quantity}
@@ -71,6 +88,13 @@ ForeignArticle::ForeignArticle(string _name, int _id, float _price, int _quantit
     name = _name;
     id = _id;
     price = _price;
+    quantity = _quantity;
+    type = _type;
+}
+
+ForeignArticle::ForeignArticle(int _id, int _quantity, string _type) : Article{"", _id, 0, _quantity, _type}
+{
+    id = _id;
     quantity = _quantity;
     type = _type;
 }

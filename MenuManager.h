@@ -39,9 +39,29 @@ void MenuManager::showMenu(User user){
 }
 
 int  MenuManager::getAnswer(){
+    string input;
     int valor;
-    cout << "Opcion: " << endl;
-    cin >> valor; 
+    bool valido = false;
+    
+    while (!valido) {
+        cout << "Opcion: ";
+        cin >> input;
+        
+        valido = true;
+        for (char c : input) {
+            if (!isdigit(c)) {
+                valido = false;
+                break;
+            }
+        }
+        
+        if (valido) {
+            valor = stoi(input);
+        } else {
+            cout << "Entrada invalida. Ingrese un entero valido." << endl;
+        }
+    }
+    
     return valor;
 }
 

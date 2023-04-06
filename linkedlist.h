@@ -24,44 +24,44 @@ public:
     {
 
         Node *actual = head;
-        
+
         if (actual != nullptr)
+        {
+            cout << "-------Articulos Disponibles En La Tienda-------" << endl;
+
+            cout << "Articulos Tecnologicos:" << endl;
+
+            while (actual != nullptr)
             {
-                cout << "-------Articulos Disponibles En La Tienda-------" << endl;
-
-                cout << "Articulos Tecnologicos:" << endl;
-
-                while (actual != nullptr)
+                if (actual->value.type == "T")
                 {
-                    if (actual->value.type == "T")
-                    {
-                        actual->value.showArticle();
-                    }
-                    actual = actual->next;
+                    actual->value.showArticle();
                 }
-
-                actual = head;
-                cout << "Articulos Deportivos:" << endl;
-                while (actual != nullptr)
-                {
-                    if (actual->value.type == "S")
-                    {
-                        actual->value.showArticle();
-                    }
-                    actual = actual->next;
-                }
-                actual = head;
-
-                cout << "Articulos Extranjeros:" << endl;
-                while (actual != nullptr)
-                {
-                    if (actual->value.type == "F")
-                    {
-                        actual->value.showArticle();
-                    }
-                    actual = actual->next;
-                }
+                actual = actual->next;
             }
+
+            actual = head;
+            cout << "Articulos Deportivos:" << endl;
+            while (actual != nullptr)
+            {
+                if (actual->value.type == "S")
+                {
+                    actual->value.showArticle();
+                }
+                actual = actual->next;
+            }
+            actual = head;
+
+            cout << "Articulos Extranjeros:" << endl;
+            while (actual != nullptr)
+            {
+                if (actual->value.type == "F")
+                {
+                    actual->value.showArticle();
+                }
+                actual = actual->next;
+            }
+        }
         else
         {
             cout << "El inventario esta vacio" << endl;
@@ -133,7 +133,6 @@ public:
 
         if (head != nullptr)
         {
-
             int index = 0;
             bool encontrado = false;
             Node *actual = head;
@@ -188,6 +187,7 @@ public:
                 anterior->next = siguiente;
                 delete deletenode;
                 size--;
+                cout << "Articulo elminado con exito" << endl;
             }
         }
         else
@@ -198,7 +198,6 @@ public:
 
     void add_head(Article value)
     {
-        cout << "entre a la cabeza " << endl;
         Node *new_node = new Node(value);
         if (head == nullptr)
         {
@@ -210,10 +209,57 @@ public:
             head = new_node;
             new_node->next = aux_node;
         }
-
-        cout << head->value.id << endl;
-
         size++;
+    }
+
+    bool is_empty()
+    {
+        if (head == nullptr)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool id_find(int ID)
+    {
+        if (head == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            Node *actual = head;
+            bool find = false;
+            while (actual != nullptr)
+            {
+                if (actual->value.id == ID)
+                {
+                    find = true;
+                    break;
+                }
+                actual = actual->next;
+            }
+            return find;
+        }
+    }
+
+    Article returnArtById(int id)
+    {
+
+        Node *actual = head;
+        while (actual != nullptr)
+        {
+            if (actual->value.id == id)
+            {
+                break;
+            }
+            actual = actual->next;
+        }
+        return actual->value;
     }
 };
 

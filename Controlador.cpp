@@ -6,6 +6,8 @@
 #include "Node.h"
 #include "linkedlist.h"
 #include "Tienda.h"
+#include "ShoppingCart.h"
+
 
 #include <string>
 #include <iostream>
@@ -18,6 +20,7 @@ public:
     ArticlesCoordinator Acoor;
     Client Cliente;
     Tienda myTienda;
+    ShoppingCart shopCart;
 
 public:
     Controlador();
@@ -32,38 +35,7 @@ Controlador::Controlador()
     Acoor = ArticlesCoordinator();
     Cliente = Client();
     MenuMan = MenuManager();
-}
-
-string Controlador::gestorAccionesClientes()
-{
-    MenuMan.showMenu(Cliente);
-    int opcion;
-    do
-    {
-        opcion = MenuMan.getAnswer();
-        switch (opcion)
-        {
-        case 1:
-            cout << "Ha seleccionado comprar un artículo" << endl;
-            // Aquí va el código para comprar un artículo
-            break;
-        case 2:
-            cout << "Ha seleccionado pagar artículos" << endl;
-            // Aquí va el código para pagar artículos
-            break;
-        case 3:
-            cout << "Ha seleccionado cambiar de usuario" << endl;
-            return "cambiar";
-            break;
-        case 4:
-            cout << "Ha seleccionado cerrar el programa" << endl;
-            return "salir";
-            break;
-        default:
-            cout << "Opcion invalida. Seleccione una opcion valida." << endl;
-            break;
-        }
-    } while (true);
+    shopCart = ShoppingCart();
 }
 
 string Controlador::gestorAccionesCoordinator()
@@ -74,8 +46,9 @@ string Controlador::gestorAccionesCoordinator()
     {
         cout << "\n" << endl;
         MenuMan.showMenu(Acoor);
-        opcion = MenuMan.getAnswer();
+        opcion = MenuMan.getAnswer();   
         cout << "\n" << endl;
+
         switch (opcion)
         {
         case 1:
@@ -109,12 +82,50 @@ string Controlador::gestorAccionesCoordinator()
     } while (true);
 }
 
+string Controlador::gestorAccionesClientes()
+{
+    int opcion;
+    do
+    {
+        cout << "\n" << endl;
+        MenuMan.showMenu(Cliente);
+        opcion = MenuMan.getAnswer();
+        cout << "\n" << endl;
+
+        switch (opcion)
+        {
+        case 1:
+            cout << "Ha seleccionado comprar un articulo" << endl;
+            Cliente.imprimir(myTienda.inv);
+            Cliente.comprarArticulo(myTienda.inv, shopCart.prod);
+            break;
+        case 2:
+            cout << "Ha seleccionado ver carrito de compras" << endl;
+            Cliente.imprimir(shopCart.prod);
+            break;
+        case 3:
+            cout << "Ha seleccionado pagar articulos" << endl;
+            break;
+        case 4:
+            cout << "Ha seleccionado cambiar de usuario" << endl;
+            return "cambiar";
+            break;
+        case 5:
+            cout << "Ha seleccionado cerrar el programa" << endl;
+            return "salir";
+            break;
+        default:
+            cout << "Opcion invalida. Seleccione una opcion valida." << endl;
+            break;
+        }
+    } while (true);
+}
+
 void Controlador::Run()
 {
 
     bool run = true;
     string salida;
-    // solicito el tipo de usuario
     char chr = MenuMan.selectUser();
 
     // segun el usuario ejecuto el gestor accion correspondiente
