@@ -38,18 +38,32 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
 
     cout << "Ingrese el tipo Tecnologico = T o Sport = S o Foreign = F ";
     cin >> tipo;
+
+    bool valido = false;
+    while (!valido)
+    {
+        if (tipo == "T" || tipo == "S" || tipo == "F" )
+        {
+            valido = true;
+            break;
+        }
+        cout << "Ingrese un tipo existente (String): ";
+        cin >> tipo;
+    }
+
     cout << "Ingrese el nombre: ";
     cin >> nombre;
 
-    
     cout << "Ingrese el ID (int): ";
     cin >> id;
-    
-    bool valido = false;
-    while (!valido) {
-        bool findid=inv.id_find(id);
-        if (findid==false){
-            valido = true; 
+
+    bool valido1 = false;
+    while (!valido1)
+    {
+        bool findid = inv.id_find(id);
+        if (findid == false)
+        {
+            valido1 = true;
             break;
         }
         cout << "Ingrese un ID no existente (int): ";
@@ -58,8 +72,33 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
 
     cout << "Ingrese el precio (float): ";
     cin >> precio;
+
+    bool valido2 = false;
+    while (!valido2)
+    {
+        if (precio >= 0)
+        {
+            valido2 = true;
+            break;
+        }
+        cout << "Ingrese una precio correcto (float): ";
+        cin >> precio;
+    }
+
     cout << "Ingrese la cantidad (int): ";
     cin >> cantidad;
+
+    bool valido3 = false;
+    while (!valido3)
+    {
+        if (cantidad > 0)
+        {
+            valido3 = true;
+            break;
+        }
+        cout << "Ingrese una cantidad correcta (int): ";
+        cin >> cantidad;
+    }
 
     if (tipo == "T")
     {

@@ -27,7 +27,7 @@ public:
 
         if (actual != nullptr)
         {
-            cout << "-------Articulos Disponibles En La Tienda-------" << endl;
+            cout << "-------Listado De Articulos-------" << endl;
 
             cout << "Articulos Tecnologicos:" << endl;
 
@@ -261,6 +261,39 @@ public:
         }
         return actual->value;
     }
+
+    float returnTotal()
+    {
+        float total = 0;
+        Node *actual = head;
+        while (actual != nullptr)
+        {
+            if (actual->value.type == "F")
+            {
+                total = total + (actual->value.price * (1.1)) * actual->value.quantity;
+            }
+            else
+            {
+                total = total + actual->value.price * actual->value.quantity;
+            }
+            actual = actual->next;
+        }
+        return total;
+    }
+
+    void vaciar() {
+        Node* temp = head;
+        while (temp != nullptr) {
+            Node* siguiente = temp->next;
+            delete temp;
+            temp = siguiente;
+        }
+        head = nullptr;
+        size = 0;
+    }
+
+
+
 };
 
 #endif // linkedlist

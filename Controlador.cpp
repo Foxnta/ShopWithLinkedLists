@@ -7,6 +7,7 @@
 #include "linkedlist.h"
 #include "Tienda.h"
 #include "ShoppingCart.h"
+#include "ConsolidarCompra.h"
 
 
 #include <string>
@@ -20,7 +21,8 @@ public:
     ArticlesCoordinator Acoor;
     Client Cliente;
     Tienda myTienda;
-    ShoppingCart shopCart;
+    ConsolidarCompra ConCompra;
+    
 
 public:
     Controlador();
@@ -35,7 +37,7 @@ Controlador::Controlador()
     Acoor = ArticlesCoordinator();
     Cliente = Client();
     MenuMan = MenuManager();
-    shopCart = ShoppingCart();
+    ConCompra = ConsolidarCompra();
 }
 
 string Controlador::gestorAccionesCoordinator()
@@ -97,14 +99,15 @@ string Controlador::gestorAccionesClientes()
         case 1:
             cout << "Ha seleccionado comprar un articulo" << endl;
             Cliente.imprimir(myTienda.inv);
-            Cliente.comprarArticulo(myTienda.inv, shopCart.prod);
+            Cliente.comprarArticulo(myTienda.inv);
             break;
         case 2:
             cout << "Ha seleccionado ver carrito de compras" << endl;
-            Cliente.imprimir(shopCart.prod);
+            Cliente.imprimirCarrito();
             break;
         case 3:
             cout << "Ha seleccionado pagar articulos" << endl;
+            ConCompra.Pago(myTienda.inv,Cliente.shopCart.prod); 
             break;
         case 4:
             cout << "Ha seleccionado cambiar de usuario" << endl;
