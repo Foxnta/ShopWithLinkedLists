@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include <limits>
 using namespace std;
 
 class ArticlesCoordinator : public User
@@ -42,7 +43,7 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
     bool valido = false;
     while (!valido)
     {
-        if (tipo == "T" || tipo == "S" || tipo == "F" )
+        if (tipo == "T" || tipo == "S" || tipo == "F")
         {
             valido = true;
             break;
@@ -55,7 +56,13 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
     cin >> nombre;
 
     cout << "Ingrese el ID (int): ";
-    cin >> id;
+
+    while (!(cin >> id) || id <= 0)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese un numero entero valido: ";
+    }
 
     bool valido1 = false;
     while (!valido1)
@@ -67,37 +74,30 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
             break;
         }
         cout << "Ingrese un ID no existente (int): ";
-        cin >> id;
+        while (!(cin >> id) || id <= 0)
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Ingrese un numero entero valido: ";
+        }
     }
 
     cout << "Ingrese el precio (float): ";
-    cin >> precio;
 
-    bool valido2 = false;
-    while (!valido2)
+    while (!(cin >> precio) || precio <= 0)
     {
-        if (precio >= 0)
-        {
-            valido2 = true;
-            break;
-        }
-        cout << "Ingrese una precio correcto (float): ";
-        cin >> precio;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese un numero en punto flotante valido: ";
     }
 
     cout << "Ingrese la cantidad (int): ";
-    cin >> cantidad;
 
-    bool valido3 = false;
-    while (!valido3)
+    while (!(cin >> cantidad) || cantidad <= 0)
     {
-        if (cantidad > 0)
-        {
-            valido3 = true;
-            break;
-        }
-        cout << "Ingrese una cantidad correcta (int): ";
-        cin >> cantidad;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese una cantidad entera positiva valida: ";
     }
 
     if (tipo == "T")
@@ -123,30 +123,98 @@ void ArticlesCoordinator::addArticulo(linkedlist &inv)
 
 void ArticlesCoordinator::modifyArticulo(linkedlist &inv)
 {
+    imprimir(inv);
     string valoramodificar;
     int id;
-    cout << "Ingrese el ID que desea modificar (int): ";
-    cin >> id;
-    cout << "Ingrese el valor a modificar: Nombre(N), ID(ID), Precio(P), Cantidad(C) ";
-    cin >> valoramodificar;
 
-    if (valoramodificar == "N" || valoramodificar == "C" || valoramodificar == "ID" || valoramodificar == "P" || valoramodificar == "C")
+    cout << "Ingrese el ID que desea modificar (int): ";
+    while (!(cin >> id))
     {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese un numero entero valido: ";
+    }
+
+    if (inv.id_find(id))
+    {
+        do
+        {
+            cout << "Ingrese el valor a modificar ( Nombre(N), ID(ID), Precio(P), Cantidad(C)): ";
+            cin >> valoramodificar;
+        } while (valoramodificar != "N" && valoramodificar != "C" && valoramodificar != "ID" && valoramodificar != "P" && valoramodificar != "C");
+
         inv.modify_element(id, valoramodificar);
     }
     else
     {
-        cout << "Valor a modificar invalido" << endl;
+        cout << "ID no encontrado" << endl;
+    }
+
+    cout << "Desea modificar otro articulo SI (1) O NO (0): " << endl;
+
+    int modificarmas;
+    cin >> modificarmas;
+
+    bool valido = false;
+    while (!valido)
+    {
+        if (modificarmas == 1 || modificarmas == 0)
+        {
+            valido = true;
+            break;
+        }
+        cout << "Ingrese un valor correcto SI (1) O NO (0) : ";
+        cin >> modificarmas;
+    }
+
+    if (modificarmas == 1)
+    {
+        modifyArticulo(inv);
+    }
+    else
+    {
+        return;
     }
 }
 
 void ArticlesCoordinator::deleteArticulo(linkedlist &inv)
 {
+    imprimir(inv);
     string valoramodificar;
     int id;
     cout << "Ingrese el ID que desea eliminar (int): ";
     cin >> id;
     inv.delete_element(id);
+
+    bool value = inv.is_empty();
+    if (!value)
+    {
+        cout << "Desea eliminar otro articulo SI (1) O NO (0): " << endl;
+
+        int eliminarmas;
+        cin >> eliminarmas;
+        bool valido = false;
+
+        while (!valido)
+        {
+            if (eliminarmas == 1 || eliminarmas == 0)
+            {
+                valido = true;
+                break;
+            }
+            cout << "Ingrese un valor correcto SI (1) O NO (0) : ";
+            cin >> eliminarmas;
+        }
+
+        if (eliminarmas == 1)
+        {
+            deleteArticulo(inv);
+        }
+        else
+        {
+            return;
+        }
+    }
 }
 
 #endif // ARTICLES_COORDINATOR_H

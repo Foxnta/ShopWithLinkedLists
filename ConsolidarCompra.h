@@ -27,11 +27,10 @@ void ConsolidarCompra::Pago(linkedlist &inv, linkedlist &carrito)
         return;
     }
 
-    cout << " \n Por favor verifique los productos a comprar \n"
-         << endl;
-    carrito.traverse();
-    cout << " \n TOTAL DE LA COMPRA ";
-    cout << carrito.returnTotal() << endl;
+    cout << " \n Por favor verifique los productos a comprar \n"<< endl;
+
+    carrito.traverse2();
+    carrito.returnTotal();
 
     cout << "Desea hacer esta compra? SI (1) O NO (0)" << endl;
     int pagar;
@@ -49,8 +48,7 @@ void ConsolidarCompra::Pago(linkedlist &inv, linkedlist &carrito)
     }
 
     if(pagar==1){
-        //codigo para actualizar el inv 
-        //
+
         Node *actualcarrito = carrito.head;
         Node *actualinv = inv.head;
         while (actualcarrito != nullptr)
@@ -74,9 +72,14 @@ void ConsolidarCompra::Pago(linkedlist &inv, linkedlist &carrito)
             actualcarrito = actualcarrito->next;
         }
 
+        cout << "Pago exitoso" << endl;
+
         carrito.vaciar();
         
     }else{
+
+        carrito.vaciar();
+        cout << "Compra cancelada" << endl;
         return;
     }
 }

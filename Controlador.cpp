@@ -98,7 +98,6 @@ string Controlador::gestorAccionesClientes()
         {
         case 1:
             cout << "Ha seleccionado comprar un articulo" << endl;
-            Cliente.imprimir(myTienda.inv);
             Cliente.comprarArticulo(myTienda.inv);
             break;
         case 2:
@@ -131,7 +130,6 @@ void Controlador::Run()
     string salida;
     char chr = MenuMan.selectUser();
 
-    // segun el usuario ejecuto el gestor accion correspondiente
     while (run)
     {
         if (chr == 'A')

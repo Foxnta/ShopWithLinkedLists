@@ -4,6 +4,7 @@
 
 #include <string>
 #include <iostream>
+#include <limits>
 using namespace std;
 
 class linkedlist
@@ -27,7 +28,7 @@ public:
 
         if (actual != nullptr)
         {
-            cout << "-------Listado De Articulos-------" << endl;
+            cout << "Listado De Articulos" << endl;
 
             cout << "Articulos Tecnologicos:" << endl;
 
@@ -68,6 +69,38 @@ public:
         }
     }
 
+    void traverse2()
+    {
+        Node *actual = head;
+        if (actual != nullptr)
+        {
+            cout << "Listado De Articulos" << endl;
+            while (actual != nullptr)
+            {
+                actual->value.showArticle();
+
+                actual = actual->next;
+            }
+        }
+        else
+        {
+            cout << "El inventario esta vacio" << endl;
+        }
+    }
+
+    void cambiarcantidad(int id, int cantidad)
+    {
+        Node *actual = head;
+        while (actual != nullptr)
+        {
+            if (actual->value.id == id)
+            {
+                break;
+            }
+            actual = actual->next;
+        }
+        actual->value.quantity = cantidad;
+    }
     void modify_element(int id, string valoramodificar)
     {
         Node *actual = head;
@@ -77,51 +110,61 @@ public:
             string stringvalue;
             float floatvalue;
 
-            bool encontrado = false;
-
             while (actual != nullptr)
             {
                 if (actual->value.id == id)
                 {
-                    encontrado = true;
                     break;
                 }
                 actual = actual->next;
             }
 
-            if (encontrado == true)
+            if (valoramodificar == "N")
             {
-                if (valoramodificar == "N")
-                {
-                    cout << "Nuevo nombre: " << endl;
-                    cin >> stringvalue;
+                cout << "Nuevo nombre: " << endl;
+                cin >> stringvalue;
 
-                    actual->value.name = stringvalue;
-                }
-                else if (valoramodificar == "ID")
-                {
-                    cout << "Nuevo ID: " << endl;
-                    cin >> intvalue;
-                    actual->value.id = intvalue;
-                }
-                else if (valoramodificar == "P")
-                {
-                    cout << "Nuevo Precio: " << endl;
-                    cin >> floatvalue;
-                    actual->value.price = floatvalue;
-                }
-                else if (valoramodificar == "C")
-                {
-                    cout << "Nueva Cantidad: " << endl;
-                    cin >> intvalue;
-                    actual->value.quantity = intvalue;
-                }
+                actual->value.name = stringvalue;
             }
-            else
+            else if (valoramodificar == "ID")
             {
-                cout << "ID no encontrado: " << endl;
+                cout << "Nuevo ID: " << endl;
+                while (!(cin >> intvalue) || intvalue <= 0)
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Ingrese una cantidad entera positiva valida: ";
+                }
+                actual->value.id = intvalue;
             }
+
+            else if (valoramodificar == "P")
+            {
+                cout << "Nuevo Precio: " << endl;
+
+                while (!(cin >> floatvalue) || floatvalue <= 0)
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Ingrese un numero en punto flotante valido: ";
+                }
+                actual->value.price = floatvalue;
+            }
+
+            else if (valoramodificar == "C")
+            {
+                cout << "Nueva Cantidad: " << endl;
+                while (!(cin >> intvalue) || intvalue <= 0)
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Ingrese una cantidad entera positiva valida: ";
+                }
+                actual->value.quantity = intvalue;
+            }
+            cout << "Cambiado con exito" << endl;
         }
+
         else
         {
             cout << "la lista se encuentra vacia" << endl;
@@ -187,7 +230,6 @@ public:
                 anterior->next = siguiente;
                 delete deletenode;
                 size--;
-                cout << "Articulo elminado con exito" << endl;
             }
         }
         else
@@ -262,9 +304,10 @@ public:
         return actual->value;
     }
 
-    float returnTotal()
+    void returnTotal()
     {
         float total = 0;
+
         Node *actual = head;
         while (actual != nullptr)
         {
@@ -278,22 +321,47 @@ public:
             }
             actual = actual->next;
         }
-        return total;
+
+        cout << "impuesto adicional por cada articulo extranjero del 10%" << endl;
+        cout << "Total: ";
+        cout << total << endl;
+
+        bool b1 = false;
+
+        actual = head;
+        while (actual != nullptr && actual->next != nullptr)
+        {
+            if (actual->value.type == actual->next->value.type)
+            {
+                b1 = true;
+                break;
+            }
+            actual = actual->next;
+        }
+
+        if (b1)
+        {
+            cout << "Total con descuento: " << endl;
+            cout << total * 0.9 << endl;
+        }
+        else
+        {
+            cout << "No tiene descuento " << endl;
+        }
     }
 
-    void vaciar() {
-        Node* temp = head;
-        while (temp != nullptr) {
-            Node* siguiente = temp->next;
+    void vaciar()
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            Node *siguiente = temp->next;
             delete temp;
             temp = siguiente;
         }
         head = nullptr;
         size = 0;
     }
-
-
-
 };
 
 #endif // linkedlist
