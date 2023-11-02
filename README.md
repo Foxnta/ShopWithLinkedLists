@@ -1,6 +1,6 @@
-# tallerLenguajesDeProgrmacion
 
-EAFI-ZON Console Application
+
+# EAFI-ZON Console Application
 Welcome to the EAFI-ZON Console Application repository! This project showcases a console application for the EAFI-ZON system, built using Object-Oriented Programming (OOP) and linked lists.
 
 About EAFI-ZON
