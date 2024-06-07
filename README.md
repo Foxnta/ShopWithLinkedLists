@@ -16,3 +16,6 @@ We've challenged ourselves by not using arrays or vectors, opting for linked lis
 
 Explore the Wiki
 To dive deeper into the project, visit our Wiki.
+
+
+![UML](https://github.com/Foxnta/tallerLenguajesDeProgrmacion/assets/98507207/c64acf3e-431f-4243-a8f8-bb4e72c9137f)
